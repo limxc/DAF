@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <AssemblyName>DAF.Core</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
+        <PackageReference Include="ReactiveUI" Version="13.3.2" /> 
+        <PackageReference Include="ReactiveUI.WPF" Version="13.3.2" />
+        <PackageReference Include="System.Reactive" Version="5.0.0" /> 
+    </ItemGroup>
+</Project>

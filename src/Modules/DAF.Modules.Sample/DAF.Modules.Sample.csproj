@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DAF.Modules.Sample</AssemblyName>
+  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
+        <PackageReference Include="PropertyChanged.Fody" Version="3.3.3" /> 
+        <PackageReference Include="ReactiveUI.Fody" Version="13.3.2" /> 
+        <PackageReference Include="ReactiveUI.WPF" Version="13.3.2" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\DAF.Core\DAF.Core.csproj" />
+      <ProjectReference Include="..\..\Services\DAF.Services.Interfaces\DAF.Services.Interfaces.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Views\Rui3View.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Rui2View.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\Rui3View.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Rui2View.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="xcopy &quot;$(TargetDir)*&quot; &quot;$(SolutionDir)\src\DAF.Shell\$(OutDir)\Modules\&quot; /Y /S" />
+    </Target>
+</Project> 
