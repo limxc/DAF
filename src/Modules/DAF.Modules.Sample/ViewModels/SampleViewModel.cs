@@ -1,5 +1,7 @@
-﻿using System;
+﻿using System.Diagnostics;
+using System.Linq;
 using DAF.Modules.Sample.Views;
+using DAF.Services.Interfaces;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -10,43 +12,27 @@ namespace DAF.Modules.Sample.ViewModels
 {
     public class SampleViewModel : BindableBase, IDestructible, INavigationAware
     {
-        private readonly IRegionManager regionManager;
+        private readonly IContainerProvider _container;
+        private readonly IRegionManager _regionManager;
 
         public SampleViewModel(IRegionManager regionManager, IContainerProvider container)
         {
-            LoadPrism = new DelegateCommand(() => Load("SampleRegion1", typeof(PrismView)));
-            UnloadPrism = new DelegateCommand(() => Unload("SampleRegion1"));
-            Nav2Empty = new DelegateCommand(() => regionManager.RequestNavigate("SampleRegion1", nameof(EmptyView)));
+            _regionManager = regionManager;
+            _container = container;
 
-            LoadRui = new DelegateCommand(() => Load("SampleRegion2", typeof(RuiView)));
-            UnloadRui = new DelegateCommand(() => Unload("SampleRegion2"));
+            LoadCommand = new DelegateCommand<string>(Load);
+            UnloadCommand = new DelegateCommand<string>(UnLoad);
+            //_regionManager.RegisterViewWithRegion("SampleRegion"1, typeof(PrismView));
+            //_regionManager.RegisterViewWithRegion("SampleRegion"2, typeof(RuiView));
+            //_regionManager.RegisterViewWithRegion("SampleRegion"3, typeof(Rui2View));
+            //_regionManager.RegisterViewWithRegion("SampleRegion"4, typeof(Rui3View)); 
 
-            LoadRui2 = new DelegateCommand(() => Load("SampleRegion3", typeof(Rui2View)));
-            UnloadRui2 = new DelegateCommand(() => Deactivate("SampleRegion3"));
-
-            LoadRui3 = new DelegateCommand(() => Load("SampleRegion4", typeof(Rui3View)));
-            UnloadRui3 = new DelegateCommand(() => Unload("SampleRegion4"));
-
-            this.regionManager = regionManager;
-
-            //regionManager.RegisterViewWithRegion("SampleRegion"1, typeof(PrismView));
-            //regionManager.RegisterViewWithRegion("SampleRegion"2, typeof(RuiView));
-            //regionManager.RegisterViewWithRegion("SampleRegion"3, typeof(Rui2View));
-            //regionManager.RegisterViewWithRegion("SampleRegion"4, typeof(Rui3View));
+            var ms = _container.Resolve<IMessageService>();
+            Debug.WriteLine(ms.GetMessage());
         }
 
-        public Rui2ViewModel Rui2 { get; set; }
-
-        public DelegateCommand LoadPrism { get; }
-        public DelegateCommand UnloadPrism { get; }
-        public DelegateCommand Nav2Empty { get; }
-
-        public DelegateCommand LoadRui { get; }
-        public DelegateCommand UnloadRui { get; }
-        public DelegateCommand LoadRui2 { get; }
-        public DelegateCommand UnloadRui2 { get; }
-        public DelegateCommand LoadRui3 { get; }
-        public DelegateCommand UnloadRui3 { get; }
+        public DelegateCommand<string> LoadCommand { get; }
+        public DelegateCommand<string> UnloadCommand { get; }
 
         public void Destroy()
         {
@@ -58,6 +44,17 @@ namespace DAF.Modules.Sample.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            Load("PrismView");
+            Load("RuiView");
+            Load("Rui2View");
+            Load("Rui3View");
+
+            Load("RegionContentView");
+            _regionManager.RequestNavigate("RegionContentDetailView", nameof(RegionContentDetailView));
+
+            Load("MultiView");
+
+            Load("NavigationParamView");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -69,27 +66,21 @@ namespace DAF.Modules.Sample.ViewModels
         {
         }
 
-        private void Load(string region, Type type)
+        private void Load(string navigatePath)
         {
-            regionManager.RequestNavigate(region, type.Name);
-
-            //regionManager.RegisterViewWithRegion(region, type);
+            if (navigatePath != null)
+                _regionManager.RequestNavigate("TabRegion", navigatePath);
         }
 
-        private void Unload(string regionName)
+        private void UnLoad(string navigatePath)
         {
-            regionManager.Regions[regionName].RemoveAll();
-        }
+            if (navigatePath != null)
+            {
+                var views = _regionManager.Regions["TabRegion"].Views;
 
-        private void Deactivate(string regionName)
-        {
-            //var region = regionManager.Regions[regionName];
-            //foreach (var view in region.ActiveViews)
-            //{
-            //    region.Deactivate(view);
-            //}
-
-            regionManager.RequestNavigate("SampleRegion3", nameof(EmptyView));
+                foreach (var v in views.Where(p => p.GetType().Name == navigatePath))
+                    _regionManager.Regions["TabRegion"].Remove(v);
+            }
         }
     }
 }

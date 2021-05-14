@@ -30,7 +30,7 @@ namespace DAF.Modules.Sample.ViewModels
         }
 
         [Reactive] public string Message { get; set; }
-
+        public string Title { get; set; } = "Rui2";
         public ReactiveCommand<Unit, Unit> Refresh { get; private set; }
 
         public ViewModelActivator Activator { get; } = new();

@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="DAF.Modules.Sample.Views.RegionContentDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <StackPanel>
+        <Label Content="Name" />
+        <TextBlock Background="Orange" Text="{Binding Person.Name}" />
+        <Label Content="FirstName" />
+        <TextBox Background="Orange" Text="{Binding Person.FirstName, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Content="LastName" />
+        <TextBox Background="Orange" Text="{Binding Person.LastName, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Content="Age" />
+        <TextBox Background="Orange" Text="{Binding Person.Age}" />
+    </StackPanel>
+</UserControl>

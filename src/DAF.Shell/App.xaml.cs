@@ -1,9 +1,9 @@
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using DAF.Core.Adapters;
 using DAF.Core.ApplicationService;
 using DAF.Core.Extensions;
+using DAF.Modules.Sample;
 using DAF.Services;
 using DAF.Services.Interfaces;
 using Prism.DryIoc;
@@ -46,12 +46,13 @@ namespace DAF.Shell
         /// <returns></returns>
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            if (!Directory.Exists("Modules"))
-                Directory.CreateDirectory("Modules");
-            return new DirectoryModuleCatalog
-            {
-                ModulePath = @".\\Modules"
-            };
+            return base.CreateModuleCatalog();
+            //if (!Directory.Exists("Modules"))
+            //    Directory.CreateDirectory("Modules");
+            //return new DirectoryModuleCatalog
+            //{
+            //    ModulePath = @".\\Modules"
+            //};
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace DAF.Shell
         {
             //moduleCatalog.AddModule<ModuleNameModule>();
             //moduleCatalog.AddModule<RxPModule>();
-            //moduleCatalog.AddModule<SampleModule>();
+            moduleCatalog.AddModule<SampleModule>();
         }
 
         /// <summary>

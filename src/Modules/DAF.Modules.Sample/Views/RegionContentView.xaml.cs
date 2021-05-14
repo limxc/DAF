@@ -3,11 +3,11 @@
 namespace DAF.Modules.Sample.Views
 {
     /// <summary>
-    ///     Interaction logic for EmptyView
+    ///     Interaction logic for RegionContentView
     /// </summary>
-    public partial class EmptyView : UserControl
+    public partial class RegionContentView : UserControl
     {
-        public EmptyView()
+        public RegionContentView()
         {
             InitializeComponent();
         }

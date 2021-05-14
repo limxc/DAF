@@ -16,23 +16,95 @@
         <Style x:Key="ButtonStyle2" TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="0,0,20,0" />
         </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Header" Value="{Binding DataContext.Title}" />
+        </Style>
     </UserControl.Resources>
-    <StackPanel>
-        <Label>SampleModule</Label>
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding LoadPrism}" Style="{StaticResource ButtonStyle1}">LoadPrism</Button>
-            <Button Command="{Binding UnloadPrism}" Style="{StaticResource ButtonStyle1}">UnloadPrism</Button>
-            <Button Command="{Binding Nav2Empty}" Style="{StaticResource ButtonStyle2}">Nav2Empty</Button>
-            <Button Command="{Binding LoadRui}" Style="{StaticResource ButtonStyle1}">LoadRui</Button>
-            <Button Command="{Binding UnloadRui}" Style="{StaticResource ButtonStyle2}">UnloadRui</Button>
-            <Button Command="{Binding LoadRui2}" Style="{StaticResource ButtonStyle1}">LoadRui2</Button>
-            <Button Command="{Binding UnloadRui2}" Style="{StaticResource ButtonStyle2}">DeactivedRui2</Button>
-            <Button Command="{Binding LoadRui3}" Style="{StaticResource ButtonStyle1}">LoadRui3</Button>
-            <Button Command="{Binding UnloadRui3}" Style="{StaticResource ButtonStyle2}">UnloadRui3</Button>
+    <DockPanel LastChildFill="True">
+
+        <StackPanel>
+            <WrapPanel Orientation="Horizontal">
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="PrismView"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadPrism
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="PrismView"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadPrism
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="RuiView"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadRui
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="RuiView"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadRui
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="Rui2View"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadRui2
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="Rui2View"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadRui2
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="Rui3View"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadRui3
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="Rui3View"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadRui3
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="RegionContentView"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadRegionContent
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="RegionContentView"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadRegionContent
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="MultiView"
+                    Style="{StaticResource ButtonStyle1}">
+                    LoadMultiView
+                </Button>
+                <Button
+                    Command="{Binding UnloadCommand}"
+                    CommandParameter="MultiView"
+                    Style="{StaticResource ButtonStyle2}">
+                    UnLoadMultiView
+                </Button>
+                <Button
+                    Command="{Binding LoadCommand}"
+                    CommandParameter="NavigationParamView"
+                    Style="{StaticResource ButtonStyle2}">
+                    LoadNavigationParamView
+                </Button>
+            </WrapPanel>
+            <TabControl prism:RegionManager.RegionName="TabRegion" />
+
         </StackPanel>
-        <ContentControl Margin="5" prism:RegionManager.RegionName="SampleRegion1" />
-        <ContentControl Margin="5" prism:RegionManager.RegionName="SampleRegion2" />
-        <ContentControl Margin="5" prism:RegionManager.RegionName="SampleRegion3" />
-        <ContentControl Margin="5" prism:RegionManager.RegionName="SampleRegion4" />
-    </StackPanel>
+    </DockPanel>
 </UserControl>

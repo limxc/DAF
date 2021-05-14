@@ -22,18 +22,36 @@
 ###### 3. ViewModelLocator(ViewModelLocatorExtension)
     默认方式->同文件夹内->外部dll(xxx.Core.ViewModels)
 ###### 4. IEventAggregator 
-    Prism.Events.EventBase
-###### 5. Navigation
-    INavigationAware及子类IConfirmNavgationRequest: 传参方式(url/参数)
+    Message定义 :  PubSubEvent<T>: Prism.Events.EventBase
+    ea.GetEvent<MessageSentEvent>().Subscribe()多个重载, 实现filter, thread, alive.
+    ea.GetEvent<MessageSentEvent>().Publish()
+###### 5. Navigation 
     导航日志IRegionNavigationJournal: 
-        需要在导航过程中触发回调(x.Context.NavigationService.Journal)
+        可在OnNavigatedTo()方法中获取navigationContext.NavigationService.Journal
+        也可在导航过程中触发回调(regionManager.RequestNavigation()方法中的回调函数)
         使用NavigationContext.NavigationService.Journal.GoBack()/GoForward()
+    INavigationAware 跳转前/后, 是否新建
+    IConfirmNavigationRequest(继承自INavigationAware) 跳转确认,传参方式(url/参数)
+    NavigationParameters
 ###### 6. DialogService
     创建: ViewModel实现IDialogAware
     注册: containerRegistry.RegisterDialog<view,vm>();
     使用: IDialogService
     参数: DialogParameters(keyvaluepair)
-###### 7. Aop(AspectInjector)
+###### 7. IActiveAware
+    类似于ReactiveUI中的IActivatableViewModel, 当前vm是否处于激活状态
+    IActiveAware.IsActiveChanged事件用于触发CompositeCommand的CanExecuteChanged(DelegateCommand实现了IActiveAware),
+    多数时刻,仅在IsActive的Setter中处理状态切换
+###### 8. Region
+    RegionManager.RegionContext 共享上下文(列表/详情)
+        需要在详情页view的cs文件中处理事件
+            RegionContext.GetObservableContext(this).PropertyChanged += (s, e) =>
+            {
+                var context = (ObservableObject<object>) s;
+                (DataContext as RegionContextDetailViewModel).People = (People) context.Value;
+            };
+    IRegionMemberLifetime 控制生命周期(Gets a value indicating whether this instance should be kept-alive upon deactivation.), 搭配INavigationAware.IsNavigationTarget(false)
+###### 9. Aop(AspectInjector)
 
 #### 解决方案
 ###### 1.模块控制与应用关闭

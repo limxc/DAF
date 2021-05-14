@@ -26,7 +26,7 @@ namespace DAF.Modules.Sample.ViewModels
         }
 
         [Reactive] public string Message { get; set; }
-
+        public string Title { get; set; } = "Rui3";
         public ReactiveCommand<Unit, Unit> Refresh { get; }
     }
 }

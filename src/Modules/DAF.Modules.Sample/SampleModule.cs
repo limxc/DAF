@@ -27,19 +27,26 @@ namespace DAF.Modules.Sample
             //_regionManager.RegisterViewWithRegion(RegionNames.SampleRegion1, typeof(PrismView));
             //_regionManager.RegisterViewWithRegion(RegionNames.SampleRegion2, typeof(RuiView));
             //_regionManager.RegisterViewWithRegion(RegionNames.SampleRegion3, typeof(Rui2View));
-            //_regionManager.RegisterViewWithRegion(RegionNames.SampleRegion4, typeof(Rui3View));
+            //_regionManager.RegisterViewWithRegion(RegionNames.SampleRegion4, typeof(Rui3View)); 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<SampleView>();
-            containerRegistry.RegisterForNavigation<EmptyView>();
 
             ///将view注册到全局, region中remove掉依然可以navigate
             containerRegistry.RegisterForNavigation<PrismView>();
             containerRegistry.RegisterForNavigation<RuiView>();
             containerRegistry.RegisterForNavigation<Rui2View>();
             containerRegistry.RegisterForNavigation<Rui3View>();
+
+            containerRegistry.RegisterForNavigation<RegionContentView>();
+            containerRegistry.RegisterForNavigation<RegionContentDetailView>();
+
+            containerRegistry.RegisterForNavigation<MultiView>();
+
+            containerRegistry.RegisterForNavigation<NavigationParamView>();
+            containerRegistry.RegisterForNavigation<NavigationParamDetailView>();
         }
     }
 }

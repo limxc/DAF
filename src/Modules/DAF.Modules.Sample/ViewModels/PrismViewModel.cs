@@ -35,6 +35,8 @@ namespace DAF.Modules.Sample.ViewModels
             //});
         }
 
+        public string Title { get; set; } = "Prism";
+
         public string Message { get; set; }
 
         /// <summary>

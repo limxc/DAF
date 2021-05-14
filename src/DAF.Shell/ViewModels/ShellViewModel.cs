@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using DAF.Core;
 using DAF.Core.ApplicationService;
+using DAF.Core.Mvvm;
 using Prism.Commands;
 using Prism.Regions;
 
 namespace DAF.Shell.ViewModels
 {
-    public class ShellViewModel : INotifyPropertyChanged
+    public class ShellViewModel : ViewModelBase
     {
         private readonly IRegionManager _regionManager;
 
@@ -64,8 +65,11 @@ namespace DAF.Shell.ViewModels
 
             Task.Run(async () =>
             {
-                await Task.Delay(3000);
-                Title += DateTime.Now;
+                while (true)
+                {
+                    await Task.Delay(1000);
+                    Title = $"{DateTime.Now}";
+                }
             });
         }
 
@@ -75,7 +79,5 @@ namespace DAF.Shell.ViewModels
 
         public IApplicationCommands ApplicationCommands { get; set; }
         public DelegateCommand Nav2Sample { get; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

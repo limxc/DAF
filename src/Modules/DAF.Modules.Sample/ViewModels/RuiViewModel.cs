@@ -26,6 +26,7 @@ namespace DAF.Modules.Sample.ViewModels
                 });
         }
 
+        public string Title { get; set; } = "Rui";
         [Reactive] public string Message { get; set; }
 
         public void Destroy()
